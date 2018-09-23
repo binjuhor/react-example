@@ -1,51 +1,29 @@
 import React, { Component } from 'react'
+import Counter from './counter'
 
-class Counter  extends Component {
-    state = {
-        count: 0,
-        tags: ['tag1', 'tag2', 'tag3', 'tag4', 'tag5', 'tag6']
-    }
+class Counters extends Component {
+    state = { 
+        counters: [
+            { id: 1, value: 4 },
+            { id: 2, value: 0 },
+            { id: 3, value: 0 },
+            { id: 4, value: 0 },
+            { id: 5, value: 0 },
+            { id: 6, value: 0 }
+        ]
+     }
 
-
-    // constructor(){
-    //     super()
-    //     this.handleIncrement = this.handleIncrement.bind( this )
-    // }
-
-    // handleIncrement() {
-    //     console.log('What the fuck?', this )
-    // }
-
-    handleIncrement = () =>{
-        this.setState( { count: this.state.count+1 } )
-    }
-
-    renderTags() {
-        if (this.state.tags.length === 0) return <p>There are no tags!</p>
-
-        return <ul>{this.state.tags.map(tag => <li key={tag}> {tag} </li>)}</ul>
-    }
-
-    render() {
-        return (
+    render() { 
+        return ( 
             <div>
-                <span className={ this.getBadgeMethod() }>{ this.formatCount() }</span>
-                <button onClick={ this.handleIncrement } className="btn btn-secondary btn-sm">Increment</button>
-                { this.renderTags() }
+                { this.state.counters.map( counter => 
+                <Counter key={ counter.id } value={ counter.value }>
+                    <h4>Counter #{ counter.id }</h4>
+                </Counter>
+                 ) }
             </div>
-        )
-    }
-
-    getBadgeMethod() {
-        let classes = "badge m-2 badge-"
-        classes += (this.state.count === 0) ? "warning" : "primary"
-        return classes
-    }
-
-    formatCount() {
-        const { count } = this.state
-        return count === 0 ? "Zero" : count
+         )
     }
 }
-
-export default Counter
+ 
+export default Counters;
