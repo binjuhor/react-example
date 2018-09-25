@@ -1,35 +1,29 @@
 import React, { Component } from 'react'
+import { CounterContext } from './counters'
+
+const Badge = ( { count } ) =>  (
+	<span className={ "badge m-2 badge-" + (count === 0 ? "warning" : "primary") }>{ count === 0 ? "Zero" : count }</span>
+)
 
 class Counter  extends Component {
-    state = {
-        count: this.props.value
-    }
-
-    handleIncrement = product =>{
-        console.log(product )
-        this.setState( { value: this.state.value + 1 } )
-    }
 
     render() {
-        console.log("props", this.props );
-        
         return (
-            <div>
-                <span className={ this.getBadgeMethod() }>{ this.formatCount() }</span>
-                <button onClick={ () => { this.handleIncrement() } } className="btn btn-secondary btn-sm">Increment</button>
-            </div>
+        	<CounterContext.Consumer>
+		        { value => {
+		        	const { counters, increment } = value
+
+			        return counters.map( counter => {
+			        	return (
+					        <div key={ counter.id }>
+						        <Badge count={ counter.value } />
+						        <button onClick={ increment.bind( this, counter ) } className="btn btn-secondary btn-sm">Increment</button>
+					        </div>
+				        )
+			        })
+		        }}
+	        </CounterContext.Consumer>
         )
-    }
-
-    getBadgeMethod() {
-        let classes = "badge m-2 badge-"
-        classes += (this.state.count === 0) ? "warning" : "primary"
-        return classes
-    }
-
-    formatCount() {
-        const { count } = this.state
-        return count === 0 ? "Zero" : count
     }
 }
 
