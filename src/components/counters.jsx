@@ -36,7 +36,7 @@ class CounterProvider extends Component {
 	            	counters: this.state.counters,
 
 		            increment: this.handleIncrement.bind( this )
-            }
+            	}
             }>
 	            { this.props.children }
             </CounterContext.Provider>
